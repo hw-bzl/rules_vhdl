@@ -1,0 +1,36 @@
+load("//vhdl:defs.bzl", "vhdl_library")
+load(":vhdl_library_analysis_test.bzl", "vhdl_library_test_suite")
+
+package(default_visibility = ["//visibility:private"])
+
+vhdl_library(
+    name = "leaf",
+    srcs = ["leaf.vhd"],
+    hdrs = ["leaf_pkg.vhd"],
+    data = ["leaf.dat"],
+)
+
+vhdl_library(
+    name = "dep_a",
+    srcs = ["dep_a.vhd"],
+)
+
+vhdl_library(
+    name = "dep_b",
+    srcs = ["dep_b.vhdl"],
+    deps = [":dep_a"],
+)
+
+vhdl_library(
+    name = "top",
+    srcs = ["top.vhd"],
+    deps = [":dep_b"],
+)
+
+vhdl_library(
+    name = "bad_src",
+    srcs = ["invalid.txt"],
+    tags = ["manual"],
+)
+
+vhdl_library_test_suite(name = "vhdl_library_tests")
