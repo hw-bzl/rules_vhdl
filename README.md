@@ -8,10 +8,11 @@ A small Bazel module that provides reusable VHDL dependency graph metadata via `
 
 `vhdl_library` collects:
 
-- `srcs` (`.vhd`, `.vhdl`)
-- `hdrs` (`.vhd`, `.vhdl`)
-- `data` (runtime/compile-side data files)
-- `deps` (other `vhdl_library` targets)
+- `srcs` (`.vhd`, `.vhdl`) — VHDL source files
+- `data` — data files needed during compilation or simulation
+- `deps` — other `vhdl_library` targets
+- `library` — VHDL library name (defaults to `"work"`)
+- `standard` — VHDL standard version (optional; empty string means "unspecified")
 
 and propagates a transitive `VhdlInfo` provider that downstream rules can consume.
 
@@ -29,8 +30,15 @@ bazel_dep(name = "rules_vhdl", version = "0.1.0")
 load("@rules_vhdl//vhdl:defs.bzl", "vhdl_library")
 
 vhdl_library(
+    name = "utils",
+    srcs = ["utils_pkg.vhd"],
+    library = "my_utils",
+)
+
+vhdl_library(
     name = "core",
     srcs = ["core.vhd"],
+    deps = [":utils"],
 )
 
 vhdl_library(
@@ -40,7 +48,7 @@ vhdl_library(
 )
 ```
 
-`VhdlInfo` and helper constructors are exported from `@rules_vhdl//vhdl:defs.bzl` for custom rule authors.
+`VhdlInfo` is exported from `@rules_vhdl//vhdl:defs.bzl` for custom rule authors.
 
 ## Development
 
