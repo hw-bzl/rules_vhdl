@@ -1,11 +1,11 @@
 """vhdl rules"""
 
 load(
-    "vhdl_info.bzl",
+    ":vhdl_info.bzl",
     _VhdlInfo = "VhdlInfo",
 )
 load(
-    "vhdl_library.bzl",
+    ":vhdl_library.bzl",
     _vhdl_library = "vhdl_library",
 )
 
