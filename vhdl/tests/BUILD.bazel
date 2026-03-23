@@ -5,8 +5,10 @@ package(default_visibility = ["//visibility:private"])
 
 vhdl_library(
     name = "leaf",
-    srcs = ["leaf.vhd"],
-    hdrs = ["leaf_pkg.vhd"],
+    srcs = [
+        "leaf.vhd",
+        "leaf_pkg.vhd",
+    ],
     data = ["leaf.dat"],
 )
 
@@ -25,6 +27,18 @@ vhdl_library(
     name = "top",
     srcs = ["top.vhd"],
     deps = [":dep_b"],
+)
+
+vhdl_library(
+    name = "custom_lib_target",
+    srcs = ["dep_a.vhd"],
+    library = "my_custom_lib",
+)
+
+vhdl_library(
+    name = "legacy_target",
+    srcs = ["dep_a.vhd"],
+    standard = "1993",
 )
 
 vhdl_library(

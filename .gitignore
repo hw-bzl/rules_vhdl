@@ -1,1 +1,4 @@
-bazel-*
+# Git ignore patterns
+
+/bazel-*
+/user.bazelrc
