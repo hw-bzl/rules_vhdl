@@ -1,0 +1,47 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@rules_vhdl//vhdl:defs.bzl", "vhdl_library")
+
+# A tiny set of libraries showing deps + library/standard attributes.
+
+vhdl_library(
+    name = "math_pkg",
+    srcs = [
+        "src/math_pkg.vhd",
+    ],
+    library = "libmath",
+    standard = "2008",
+)
+
+vhdl_library(
+    name = "adder",
+    srcs = [
+        "src/adder.vhd",
+    ],
+    library = "libcore",
+    standard = "2008",
+    deps = [
+        ":math_pkg",
+    ],
+)
+
+vhdl_library(
+    name = "top",
+    srcs = [
+        "src/top.vhd",
+    ],
+    library = "work",
+    standard = "2008",
+    deps = [
+        ":adder",
+        ":math_pkg",
+    ],
+)
+
+build_test(
+    name = "build_test",
+    targets = [
+        ":math_pkg",
+        ":adder",
+        ":top",
+    ],
+)
