@@ -30,6 +30,12 @@ vhdl_library(
 )
 
 vhdl_library(
+    name = "explicit_top_entity_target",
+    srcs = ["dep_a.vhd"],
+    top_entity = "my_top",
+)
+
+vhdl_library(
     name = "custom_lib_target",
     srcs = ["dep_a.vhd"],
     library = "my_custom_lib",

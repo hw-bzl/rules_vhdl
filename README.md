@@ -13,6 +13,7 @@ A small Bazel module that provides reusable VHDL dependency graph metadata via `
 - `deps` — other `vhdl_library` targets
 - `library` — VHDL library name (defaults to `"work"`)
 - `standard` — VHDL standard version (optional; empty string means "unspecified")
+- `top_entity` — the library's entry-point entity name (optional; empty string means "unspecified")
 
 and propagates a transitive `VhdlInfo` provider that downstream rules can consume.
 
@@ -21,7 +22,8 @@ and propagates a transitive `VhdlInfo` provider that downstream rules can consum
 Add to `MODULE.bazel`:
 
 ```starlark
-bazel_dep(name = "rules_vhdl", version = "0.1.0")
+# See releases for available versions.
+bazel_dep(name = "rules_vhdl", version = "{version}")
 ```
 
 ## Usage
@@ -44,6 +46,7 @@ vhdl_library(
 vhdl_library(
     name = "soc",
     srcs = ["soc_top.vhdl"],
+    top_entity = "soc_top",
     deps = [":core"],
 )
 ```

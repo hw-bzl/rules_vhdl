@@ -19,6 +19,7 @@ def _vhdl_library_impl(ctx):
             data = depset(ctx.files.data),
             library = ctx.attr.library,
             standard = ctx.attr.standard,
+            top_entity = ctx.attr.top_entity,
             deps = depset(dep_infos, order = "postorder", transitive = [d.deps for d in dep_infos]),
         ),
         DefaultInfo(files = depset(ctx.files.srcs + ctx.files.data)),
@@ -50,6 +51,10 @@ vhdl_library = rule(
             doc = "VHDL standard version. Empty string means not specified; consumer rules apply their default.",
             default = "",
             values = ["", "1993", "2000", "2002", "2008", "2019"],
+        ),
+        "top_entity": attr.string(
+            doc = "The top entity of this library. This is a local concept; the library's own entry-point entity, not necessarily the global design top. Empty string means not specified.",
+            default = "",
         ),
     },
 )
