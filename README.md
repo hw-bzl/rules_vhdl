@@ -1,5 +1,6 @@
 # rules_vhdl
 
+[![BCR](https://img.shields.io/badge/BCR-rules_vhdl-green?logo=bazel)](https://registry.bazel.build/modules/rules_vhdl)
 [![CI](https://github.com/hw-bzl/bazel_rules_vhdl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hw-bzl/bazel_rules_vhdl/actions/workflows/ci.yml)
 
 A small Bazel module that provides reusable VHDL dependency graph metadata via `vhdl_library`.
