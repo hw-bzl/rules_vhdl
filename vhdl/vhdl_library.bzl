@@ -57,4 +57,8 @@ vhdl_library = rule(
             default = "",
         ),
     },
+    provides = [
+        VhdlInfo,
+        DefaultInfo,
+    ],
 )
