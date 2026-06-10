@@ -17,7 +17,7 @@ def _vhdl_library_impl(ctx):
         VhdlInfo(
             srcs = depset(ctx.files.srcs),
             data = depset(ctx.files.data),
-            library = ctx.attr.library,
+            library = ctx.attr.library or ctx.label.name,
             standard = ctx.attr.standard,
             top_entity = ctx.attr.top_entity,
             deps = depset(dep_infos, order = "postorder", transitive = [d.deps for d in dep_infos]),
@@ -40,8 +40,8 @@ vhdl_library = rule(
             ],
         ),
         "library": attr.string(
-            doc = "VHDL library name this target compiles into.",
-            default = "work",
+            doc = "VHDL library name this target compiles into. Defaults to the target's name.",
+            default = "",
         ),
         "srcs": attr.label_list(
             doc = "VHDL source files.",

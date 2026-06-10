@@ -14,7 +14,7 @@ def _leaf_provider_test_impl(ctx):
     asserts.equals(env, ["leaf.vhd", "leaf_pkg.vhd"], _file_basenames(info.srcs.to_list()))
     asserts.equals(env, ["leaf.dat"], _file_basenames(info.data.to_list()))
     asserts.equals(env, [], info.deps.to_list())
-    asserts.equals(env, "work", info.library)
+    asserts.equals(env, "leaf", info.library)
     asserts.equals(env, "", info.standard)
     asserts.equals(env, "", info.top_entity)
 
@@ -62,7 +62,7 @@ def _legacy_standard_test_impl(ctx):
     info = target[VhdlInfo]
 
     asserts.equals(env, "1993", info.standard)
-    asserts.equals(env, "work", info.library)
+    asserts.equals(env, "legacy_target", info.library)
 
     return analysistest.end(env)
 

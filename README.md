@@ -12,7 +12,7 @@ A small Bazel module that provides reusable VHDL dependency graph metadata via `
 - `srcs` (`.vhd`, `.vhdl`) — VHDL source files
 - `data` — data files needed during compilation or simulation
 - `deps` — other `vhdl_library` targets
-- `library` — VHDL library name (defaults to `"work"`)
+- `library` — VHDL library name (defaults to the target's name)
 - `standard` — VHDL standard version (optional; empty string means "unspecified")
 - `top_entity` — the library's entry-point entity name (optional; empty string means "unspecified")
 
