@@ -22,7 +22,15 @@ def _vhdl_library_impl(ctx):
             top_entity = ctx.attr.top_entity,
             deps = depset(dep_infos, order = "postorder", transitive = [d.deps for d in dep_infos]),
         ),
-        DefaultInfo(files = depset(ctx.files.srcs + ctx.files.data)),
+        DefaultInfo(
+            files = depset(ctx.files.srcs + ctx.files.data),
+        ),
+        coverage_common.instrumented_files_info(
+            ctx,
+            source_attributes = ["srcs"],
+            dependency_attributes = ["deps"],
+            extensions = ["vhd", "vhdl"],
+        ),
     ]
 
 vhdl_library = rule(
