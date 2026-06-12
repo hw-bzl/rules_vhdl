@@ -1,6 +1,6 @@
 module(
     name = "rules_vhdl",
-    version = "0.1.2",
+    version = "0.2.0",
     bazel_compatibility = [">=7.5.0"],
 )
 
