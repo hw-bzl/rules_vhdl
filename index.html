@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction - rules_vhdl</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">rules_vhdl</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/hw-bzl/bazel_rules_vhdl" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="rules_vhdl"><a class="header" href="#rules_vhdl">rules_vhdl</a></h1>
+<p>A small Bazel module that provides reusable VHDL dependency-graph
+metadata via <a href="./vhdl_library.html"><code>vhdl_library</code></a>.</p>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p><code>rules_vhdl</code> doesn't compile or simulate VHDL itself. It supplies a
+single library rule — <a href="./vhdl_library.html"><code>vhdl_library</code></a> — that
+collects source files, per-target metadata (library name, standard,
+top-entity), and dependency edges, and exposes them as a transitive
+<a href="./vhdl_info.html"><code>VhdlInfo</code></a> provider. Downstream synthesis, simulation,
+and lint rules consume that provider to drive tools like Vivado, GHDL,
+NVC, or Modelsim without each ruleset re-inventing the dependency
+graph.</p>
+<p>Cross-language dependencies are first-class: <code>vhdl_library.verilog_deps</code>
+accepts <code>verilog_library</code> targets (from
+<a href="https://registry.bazel.build/modules/rules_verilog"><code>rules_verilog</code></a>),
+and the resolved
+<a href="https://github.com/hw-bzl/rules_verilog"><code>VerilogInfo</code></a> chain is
+carried on <code>VhdlInfo.verilog_deps</code> so mixed-language consumers walk one
+merged depset per axis.</p>
+<h2 id="quick-start"><a class="header" href="#quick-start">Quick start</a></h2>
+<h3 id="modulebazel"><a class="header" href="#modulebazel"><code>MODULE.bazel</code></a></h3>
+<pre><code class="language-python">bazel_dep(name = "rules_vhdl", version = "{version}")
+</code></pre>
+<p><code>rules_vhdl</code> has no toolchain to register — <code>vhdl_library</code> is
+metadata-only. The consuming ruleset (synthesis, simulation, etc.)
+brings its own toolchain.</p>
+<h3 id="helloutils_pkgvhd"><a class="header" href="#helloutils_pkgvhd"><code>hello/utils_pkg.vhd</code></a></h3>
+<pre><code class="language-vhdl">library ieee;
+use ieee.std_logic_1164.all;
+
+package utils_pkg is
+  function bit_or(a, b : std_logic) return std_logic;
+end package;
+
+package body utils_pkg is
+  function bit_or(a, b : std_logic) return std_logic is
+  begin
+    return a or b;
+  end function;
+end package body;
+</code></pre>
+<h3 id="hellohellovhd"><a class="header" href="#hellohellovhd"><code>hello/hello.vhd</code></a></h3>
+<pre><code class="language-vhdl">library ieee;
+use ieee.std_logic_1164.all;
+library my_utils;
+use my_utils.utils_pkg.all;
+
+entity hello is
+  port (
+    a   : in  std_logic;
+    b   : in  std_logic;
+    led : out std_logic
+  );
+end entity;
+
+architecture rtl of hello is
+begin
+  led &lt;= bit_or(a, b);
+end architecture;
+</code></pre>
+<h3 id="hellobuildbazel"><a class="header" href="#hellobuildbazel"><code>hello/BUILD.bazel</code></a></h3>
+<pre><code class="language-python">load("@rules_vhdl//vhdl:defs.bzl", "vhdl_library")
+
+vhdl_library(
+    name = "utils",
+    srcs = ["utils_pkg.vhd"],
+    library = "my_utils",
+)
+
+vhdl_library(
+    name = "hello",
+    srcs = ["hello.vhd"],
+    top_entity = "hello",
+    deps = [":utils"],
+)
+</code></pre>
+<h3 id="consume-it"><a class="header" href="#consume-it">Consume it</a></h3>
+<p><code>vhdl_library</code> targets don't build anything on their own — hand them
+to a downstream rule that knows how to walk <code>VhdlInfo</code>. For example,
+<a href="https://registry.bazel.build/modules/rules_vivado"><code>rules_vivado</code></a>
+takes a <code>vhdl_library</code> as the <code>module</code> of a <code>vivado_project</code>:</p>
+<pre><code class="language-python">load("@rules_vivado//vivado:defs.bzl", "vivado_project", "vivado_synthesis")
+
+vivado_project(
+    name = "hello_project",
+    module = "//hello",
+    module_top = "hello",
+    part_number = "xc7a35ticsg324-1L",
+)
+
+vivado_synthesis(
+    name = "hello_synth",
+    project = ":hello_project",
+)
+</code></pre>
+<h2 id="cross-language-dependencies"><a class="header" href="#cross-language-dependencies">Cross-language dependencies</a></h2>
+<p>A VHDL design that instantiates a Verilog/SystemVerilog module via a
+component binding declares the Verilog target on <code>verilog_deps</code>:</p>
+<pre><code class="language-python">load("@rules_verilog//verilog:defs.bzl", "verilog_library")
+load("@rules_vhdl//vhdl:defs.bzl", "vhdl_library")
+
+verilog_library(
+    name = "sv_fifo",
+    srcs = ["fifo.sv"],
+)
+
+vhdl_library(
+    name = "core",
+    srcs = ["core.vhd"],
+    verilog_deps = [":sv_fifo"],
+)
+</code></pre>
+<p>Consumers walking <code>VhdlInfo.deps</code> for VHDL sources also walk
+<code>VhdlInfo.verilog_deps</code> for the Verilog side of the graph — the two
+depsets are aggregated transitively, so a top-level target sees every
+cross-language dep reachable through the chain.</p>
+<h2 id="going-further"><a class="header" href="#going-further">Going further</a></h2>
+<ul>
+<li><a href="./rules.html">Rules</a> — the public rule surface.</li>
+<li><a href="./vhdl_info.html"><code>VhdlInfo</code></a> — the provider passed to downstream
+consumers.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="rules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="rules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
