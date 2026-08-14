@@ -3,65 +3,27 @@
 [![BCR](https://img.shields.io/badge/BCR-rules_vhdl-green?logo=bazel)](https://registry.bazel.build/modules/rules_vhdl)
 [![CI](https://github.com/hw-bzl/bazel_rules_vhdl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hw-bzl/bazel_rules_vhdl/actions/workflows/ci.yml)
 
-A small Bazel module that provides reusable VHDL dependency graph metadata via `vhdl_library`.
+A small Bazel module that provides reusable VHDL dependency-graph
+metadata via
+[`vhdl_library`](https://hw-bzl.github.io/bazel_rules_vhdl/vhdl_library.html).
+Downstream synthesis, simulation, and lint rulesets consume the
+resulting
+[`VhdlInfo`](https://hw-bzl.github.io/bazel_rules_vhdl/vhdl_info.html)
+provider to drive tools like Vivado, GHDL, NVC, or Modelsim — this
+module deliberately doesn't run any of them itself.
 
-## What This Module Does
+Cross-language dependencies are first-class:
+[`vhdl_library.verilog_deps`](https://hw-bzl.github.io/bazel_rules_vhdl/vhdl_library.html#vhdl_library-verilog_deps)
+accepts
+[`rules_verilog`](https://registry.bazel.build/modules/rules_verilog)
+targets and the resolved `VerilogInfo` chain is carried on
+`VhdlInfo.verilog_deps`, so mixed-language consumers walk one merged
+depset per axis.
 
-`vhdl_library` collects:
-
-- `srcs` (`.vhd`, `.vhdl`) — VHDL source files
-- `data` — data files needed during compilation or simulation
-- `deps` — other `vhdl_library` targets
-- `library` — VHDL library name (defaults to the target's name)
-- `standard` — VHDL standard version (optional; empty string means "unspecified")
-- `top_entity` — the library's entry-point entity name (optional; empty string means "unspecified")
-
-and propagates a transitive `VhdlInfo` provider that downstream rules can consume.
-
-## Installation (Bzlmod)
-
-Add to `MODULE.bazel`:
-
-```starlark
-# See releases for available versions.
-bazel_dep(name = "rules_vhdl", version = "{version}")
-```
-
-## Usage
-
-```starlark
-load("@rules_vhdl//vhdl:defs.bzl", "vhdl_library")
-
-vhdl_library(
-    name = "utils",
-    srcs = ["utils_pkg.vhd"],
-    library = "my_utils",
-)
-
-vhdl_library(
-    name = "core",
-    srcs = ["core.vhd"],
-    deps = [":utils"],
-)
-
-vhdl_library(
-    name = "soc",
-    srcs = ["soc_top.vhdl"],
-    top_entity = "soc_top",
-    deps = [":core"],
-)
-```
-
-`VhdlInfo` is exported from `@rules_vhdl//vhdl:defs.bzl` for custom rule authors.
-
-## Development
-
-Run all checks locally:
-
-```bash
-bazel test //...
-```
+Quick start, cross-language dep authoring, and the full per-rule /
+per-provider reference are hosted at
+**<https://hw-bzl.github.io/bazel_rules_vhdl/>**.
 
 ## License
 
-Apache-2.0.
+Apache License 2.0

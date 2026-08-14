@@ -26,5 +26,8 @@ bzl_library(
     name = "vhdl_library_bzl",
     srcs = ["vhdl_library.bzl"],
     visibility = ["//visibility:public"],
-    deps = [":vhdl_info_bzl"],
+    deps = [
+        ":vhdl_info_bzl",
+        "@rules_verilog//verilog:verilog_info_bzl",
+    ],
 )

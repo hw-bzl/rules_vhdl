@@ -1,0 +1,11 @@
+[book]
+authors = [
+    "UebelAndre",
+]
+language = "en"
+multilingual = false
+src = "src"
+title = "rules_vhdl"
+
+[output.html]
+git-repository-url = "https://github.com/hw-bzl/bazel_rules_vhdl"
